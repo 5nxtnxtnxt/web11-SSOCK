@@ -8,9 +8,15 @@ interface SnowProps {
   radius: number;
   centerPosition: THREE.Vector3;
   rangeRadius: number;
+  animateRef: any;
 }
 
-const Snow: React.FC<SnowProps> = ({ radius, centerPosition, rangeRadius }) => {
+const Snow: React.FC<SnowProps> = ({
+  radius,
+  centerPosition,
+  rangeRadius,
+  animateRef
+}) => {
   const snowRef = useRef<THREE.Mesh>(null);
   const speed = 0.05;
   const position = new THREE.Vector3(
@@ -18,7 +24,7 @@ const Snow: React.FC<SnowProps> = ({ radius, centerPosition, rangeRadius }) => {
     centerPosition.y + rangeRadius + Math.random() * 2 * rangeRadius,
     centerPosition.z - rangeRadius + Math.random() * rangeRadius * 2
   );
-  useRAF(() => {
+  animateRef.push(() => {
     const snow = snowRef.current;
     if (snow) {
       if (snow.position.y <= 0) {
