@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
+import useRAF from '../../Hooks/useRAF';
 
 import * as THREE from 'three';
 
@@ -17,7 +18,7 @@ const Snow: React.FC<SnowProps> = ({ radius, centerPosition, rangeRadius }) => {
     centerPosition.y + rangeRadius + Math.random() * 2 * rangeRadius,
     centerPosition.z - rangeRadius + Math.random() * rangeRadius * 2
   );
-  useFrame(() => {
+  useRAF(() => {
     const snow = snowRef.current;
     if (snow) {
       if (snow.position.y <= 0) {
