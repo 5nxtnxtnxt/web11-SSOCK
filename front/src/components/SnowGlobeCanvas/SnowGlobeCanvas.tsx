@@ -1,5 +1,5 @@
 import { OrbitControls } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import styled from 'styled-components';
 import theme from '../../utils/theme';
 import Snow from './Snow';
@@ -8,7 +8,9 @@ import Ground from './Ground';
 import Glass from './Glass';
 import GiftBox from './GiftBox';
 import Raycaster from './Raycaster';
+import Glove from './Glove';
 import { useRef } from 'react';
+import { CubeTextureLoader } from 'three';
 
 const CanvasBox = styled.div`
   margin: auto;
@@ -23,7 +25,6 @@ const SnowGlobeCanvas = () => {
   const isClicked = useRef<boolean>(false);
   // camera controls ref
 
-
   const glassRadius = 7;
   const glassPosition = new THREE.Vector3(0, glassRadius / 2, 0);
   const snows = Array.from({ length: 100 }, (_, i) => (
@@ -34,10 +35,11 @@ const SnowGlobeCanvas = () => {
       radius={0.05 + Math.random() * 0.15}
     />
   ));
+
   return (
     <CanvasBox>
       <Canvas camera={{ position: [0, 10, 10] }}>
-        <OrbitControls enablePan={false} enableZoom={false}/>
+        <OrbitControls enablePan={true} enableZoom={true} />
         <Raycaster isClickedRef={isClicked} />
         <ambientLight intensity={0.8} color={'#cfcabb'} />
         <directionalLight
@@ -46,14 +48,14 @@ const SnowGlobeCanvas = () => {
           color={'#e2bb83'}
         />
         <Ground scale={1} position={new THREE.Vector3(0, 0, 0)} />
-        <Glass
+        {/* <Glass
           position={new THREE.Vector3(0, glassRadius / 2, 0)}
           color={new THREE.Color('skyblue')}
           radius={glassRadius}
           opacity={0.1}
-        />
+        /> */}
         {snows}
-
+        <Glove scale={1} position={new THREE.Vector3(0, 0, 0)} />
         <GiftBox
           scale={1}
           position={new THREE.Vector3(4, 0, 0)}
